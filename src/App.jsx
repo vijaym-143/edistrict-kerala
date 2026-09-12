@@ -5,9 +5,44 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 import IncomeForm from "./components/IncomeForm";
 import TrackStatus from "./components/TrackStatus";
+import HigherEd from "./components/HigherEd";
+
+// Single Vercel deploy, portals differ only by URL params:
+//   /                              -> eDistrict home
+//   ?site=edistrict&page=form      -> eDistrict income form
+//   ?site=edistrict&page=track     -> eDistrict status check
+//   ?site=highered                 -> Higher Education Dept clone
+const SITES = ["edistrict", "highered"];
+const PAGES = ["home", "form", "track"];
+
+function readParams() {
+  try {
+    const sp = new URLSearchParams(window.location.search);
+    const site = sp.get("site");
+    const page = sp.get("page");
+    return {
+      site: SITES.includes(site) ? site : "edistrict",
+      page: PAGES.includes(page) ? page : "home",
+    };
+  } catch {
+    return { site: "edistrict", page: "home" };
+  }
+}
+
+function writeParams(site, page) {
+  try {
+    const sp = new URLSearchParams();
+    // keep params always explicit so each UI has its own shareable link
+    sp.set("site", site);
+    if (site === "edistrict" && page && page !== "home") sp.set("page", page);
+    const qs = sp.toString();
+    window.history.pushState({ site, page }, "", qs ? `?${qs}` : window.location.pathname);
+  } catch { /* ignore */ }
+}
 
 export default function App() {
-  const [view, setView] = useState("home");
+  const [portal, setPortal] = useState(() => readParams().site);
+  const [view, setView] = useState(() => readParams().page);
   const [lang, setLang] = useState("en");
   const [lastAck, setLastAck] = useState("");
 
@@ -22,10 +57,48 @@ export default function App() {
     } catch { return undefined; }
   }, []);
 
-  const go = (v) => { setView(v); window.scrollTo(0, 0); };
+  // keep state in sync with browser back/forward
+  useEffect(() => {
+    const onPop = () => {
+      const p = readParams();
+      setPortal(p.site);
+      setView(p.page);
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
+  const go = (v) => {
+    const page = PAGES.includes(v) ? v : "home";
+    setView(page);
+    writeParams("edistrict", page);
+    window.scrollTo(0, 0);
+  };
+  const goPortal = (p) => {
+    const site = SITES.includes(p) ? p : "edistrict";
+    setPortal(site);
+    if (site === "edistrict") setView((cur) => cur);
+    writeParams(site, site === "edistrict" ? view : undefined);
+    window.scrollTo(0, 0);
+  };
+
+  if (portal === "highered") {
+    return (
+      <div className={lang === "ml" ? "font-mal" : ""}>
+        <HigherEd lang={lang} setLang={setLang} onBack={() => goPortal("edistrict")} />
+      </div>
+    );
+  }
 
   return (
     <div className={lang === "ml" ? "font-mal" : ""}>
+      <div className="no-print bg-[#061f4d] text-white text-[11.5px]">
+        <div className="max-w-[1180px] mx-auto px-3 h-[28px] flex items-center gap-2">
+          <span className="opacity-70">Portals:</span>
+          <button className="px-2 font-bold bg-white text-[#061f4d]">eDistrict</button>
+          <button onClick={() => goPortal("highered")} className="px-2 underline opacity-90 hover:opacity-100">🎓 Higher Education Dept →</button>
+        </div>
+      </div>
       <TopBar lang={lang} setLang={setLang} go={go} />
       <main className="min-h-[60vh] pb-4">
         {view === "home" && <Home lang={lang} go={go} />}
