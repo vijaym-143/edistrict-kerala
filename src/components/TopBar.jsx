@@ -9,7 +9,6 @@ export default function TopBar({ lang, setLang, go }) {
         <div className="max-w-[1180px] mx-auto px-3 flex items-center justify-between h-[30px]">
           <div className="flex items-center gap-3 truncate">
             <span className="font-bold">🇮🇳 {t.govtKerala} | {t.edistrict}</span>
-            <span className="hidden md:inline opacity-70">| edistrict.kerala.gov.in (Demo Clone — Frontend Only)</span>
           </div>
           <div className="flex items-center gap-2">
             <button onClick={() => setLang("en")} className={`px-2 py-[1px] border ${lang==="en"?"bg-white text-[#082c6a] font-bold":"border-white/50"}`}>English</button>
