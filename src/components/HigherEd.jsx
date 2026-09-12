@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
+import { ArrowLeft, AtSign, Bot, CalendarDays, ChevronLeft, ChevronRight, Flower2, Globe, GraduationCap, IndianRupee, Landmark, Link2, Megaphone, Pause, Play, Rss, School, ScrollText, Search, Users } from "lucide-react";
 
 const SLIDES = [
-  { t_en: "Onam Wishes — Higher Education Department", t_ml: "ഓണം ആശംസകൾ — ഉന്നത വിദ്യാഭ്യാസ വകുപ്പ്", c1: "#8a1f1f", c2: "#d4a017", emoji: "🌼" },
-  { t_en: "Higher Education Department — Government of Kerala", t_ml: "ഉന്നത വിദ്യാഭ്യാസ വകുപ്പ് — കേരള സർക്കാർ", c1: "#0b3d91", c2: "#1560c9", emoji: "🎓" },
-  { t_en: "ICGAIFE 3.0 — IHRD AI International Conclave", t_ml: "ICGAIFE 3.0 — IHRD AI അന്തർദേശീയ കോൺക്ലേവ്", c1: "#123524", c2: "#1f8a4c", emoji: "🤖" },
-  { t_en: "HEDN — Educational Institutions", t_ml: "HEDN — വിദ്യാഭ്യാസ സ്ഥാപനങ്ങൾ", c1: "#4a1e6b", c2: "#8a3cc9", emoji: "🏫" },
-  { t_en: "Government of Kerala", t_ml: "കേരള സർക്കാർ", c1: "#7a4a00", c2: "#c97a1e", emoji: "🏛️" },
+  { t_en: "Onam Wishes — Higher Education Department", t_ml: "ഓണം ആശംസകൾ — ഉന്നത വിദ്യാഭ്യാസ വകുപ്പ്", c1: "#8a1f1f", c2: "#d4a017", Icon: Flower2 },
+  { t_en: "Higher Education Department — Government of Kerala", t_ml: "ഉന്നത വിദ്യാഭ്യാസ വകുപ്പ് — കേരള സർക്കാർ", c1: "#0b3d91", c2: "#1560c9", Icon: GraduationCap },
+  { t_en: "ICGAIFE 3.0 — IHRD AI International Conclave", t_ml: "ICGAIFE 3.0 — IHRD AI അന്തർദേശീയ കോൺക്ലേവ്", c1: "#123524", c2: "#1f8a4c", Icon: Bot },
+  { t_en: "HEDN — Educational Institutions", t_ml: "HEDN — വിദ്യാഭ്യാസ സ്ഥാപനങ്ങൾ", c1: "#4a1e6b", c2: "#8a3cc9", Icon: School },
+  { t_en: "Government of Kerala", t_ml: "കേരള സർക്കാർ", c1: "#7a4a00", c2: "#c97a1e", Icon: Landmark },
 ];
 
 const GOS = [
@@ -73,9 +74,9 @@ export default function HigherEd({ lang, setLang, onBack }) {
     <div className={ml ? "font-mal" : ""}>
       <div className="no-print bg-[#5c1212] text-white text-[11.5px]">
         <div className="max-w-[1180px] mx-auto px-3 h-[30px] flex items-center justify-between gap-2">
-          <span className="truncate">📅 {today} &nbsp;|&nbsp; {ml ? "ഉന്നത വിദ്യാഭ്യാസം, കേരള സർക്കാർ" : "Higher Education, GOK"}</span>
+          <span className="truncate flex items-center gap-1"><CalendarDays size={13} /> {today} &nbsp;|&nbsp; {ml ? "ഉന്നത വിദ്യാഭ്യാസം, കേരള സർക്കാർ" : "Higher Education, GOK"}</span>
           <div className="flex items-center gap-2 shrink-0">
-            <button onClick={onBack} className="underline font-bold">← eDistrict</button>
+            <button onClick={onBack} className="underline font-bold flex items-center gap-1"><ArrowLeft size={12} /> eDistrict</button>
             <button onClick={() => setLang("en")} className={`px-2 border ${!ml ? "bg-white text-[#5c1212] font-bold" : "border-white/50"}`}>English</button>
             <button onClick={() => setLang("ml")} className={`px-2 border ${ml ? "bg-white text-[#5c1212] font-bold" : "border-white/50"}`}>മലയാളം</button>
           </div>
@@ -85,7 +86,7 @@ export default function HigherEd({ lang, setLang, onBack }) {
       {/* Masthead */}
       <div className="bg-white border-b-4 border-[#d4a017]">
         <div className="max-w-[1180px] mx-auto px-3 py-3 flex items-center gap-3">
-          <div className="w-[58px] h-[58px] shrink-0 rounded-full bg-[#5c1212] text-white flex items-center justify-center text-[26px] border-2 border-[#d4a017]">🎓</div>
+          <div className="w-[58px] h-[58px] shrink-0 rounded-full bg-[#5c1212] text-white flex items-center justify-center border-2 border-[#d4a017]"><GraduationCap size={28} /></div>
           <div className="min-w-0">
             <div className="text-[20px] md:text-[26px] font-bold text-[#5c1212] leading-tight truncate">{ml ? "ഉന്നത വിദ്യാഭ്യാസ വകുപ്പ്" : "Higher Education Department"}</div>
             <div className="text-[12px] text-[#6b5a2a]">{ml ? "കേരള സർക്കാർ • Govt. of Kerala" : "Government of Kerala • കേരള സർക്കാർ"}</div>
@@ -93,12 +94,12 @@ export default function HigherEd({ lang, setLang, onBack }) {
           <div className="ml-auto hidden md:flex items-center gap-2">
             <div className="flex items-center border border-[#c9b98a] bg-[#fdf8ea] px-2 py-1 gap-1">
               <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={ml ? "തിരയുക…" : "Search GOs…"} className="bg-transparent outline-none text-[12.5px] w-[160px]" />
-              <span className="text-[14px]">🔍</span>
+              <Search size={14} className="text-[#6b5a2a]" />
             </div>
-            <div className="flex gap-1 text-[12px] font-bold">
-              <span className="w-7 h-7 flex items-center justify-center bg-[#1877f2] text-white rounded-sm cursor-pointer">f</span>
-              <span className="w-7 h-7 flex items-center justify-center bg-[#ff0000] text-white rounded-sm cursor-pointer">▶</span>
-              <span className="w-7 h-7 flex items-center justify-center bg-[#1da1f2] text-white rounded-sm cursor-pointer">𝕏</span>
+            <div className="flex gap-1">
+              <span className="w-7 h-7 flex items-center justify-center bg-[#1877f2] text-white rounded-sm cursor-pointer"><Globe size={14} /></span>
+              <span className="w-7 h-7 flex items-center justify-center bg-[#ff0000] text-white rounded-sm cursor-pointer"><Rss size={14} /></span>
+              <span className="w-7 h-7 flex items-center justify-center bg-[#1da1f2] text-white rounded-sm cursor-pointer"><AtSign size={14} /></span>
             </div>
           </div>
         </div>
@@ -118,22 +119,22 @@ export default function HigherEd({ lang, setLang, onBack }) {
         <div className="relative overflow-hidden border border-[#c9b98a] shadow" style={{ background: `linear-gradient(100deg, ${s.c1}, ${s.c2})` }}>
           <div className="h-[210px] md:h-[300px] flex items-center px-6 md:px-14 text-white">
             <div>
-              <div className="text-[46px] md:text-[64px] leading-none">{s.emoji}</div>
+              <div><s.Icon size={56} strokeWidth={1.5} /></div>
               <div className="text-[19px] md:text-[30px] font-bold mt-2 drop-shadow">{ml ? s.t_ml : s.t_en}</div>
               <div className="text-[12px] md:text-[13px] opacity-90 mt-1">{ml ? "ഉന്നത വിദ്യാഭ്യാസ വകുപ്പ് • കേരള സർക്കാർ" : "Higher Education Department • Government of Kerala"}</div>
             </div>
           </div>
           <div className="absolute bottom-2 left-0 right-0 flex items-center justify-center gap-2 no-print">
-            <button onClick={() => setSlide((slide - 1 + SLIDES.length) % SLIDES.length)} className="bg-black/50 text-white text-[11px] px-2 py-[3px]">◀ Prev</button>
+            <button onClick={() => setSlide((slide - 1 + SLIDES.length) % SLIDES.length)} className="bg-black/50 text-white text-[11px] px-2 py-[3px] flex items-center gap-1"><ChevronLeft size={12} /> Prev</button>
             {SLIDES.map((_, i) => (
               <span key={i} onClick={() => setSlide(i)} className={`w-3 h-3 rounded-full cursor-pointer ${i === slide ? "bg-[#d4a017]" : "bg-white/60"}`} />
             ))}
-            <button onClick={() => setPlay(!play)} className="bg-black/50 text-white text-[11px] px-2 py-[3px]">{play ? "⏸ Pause" : "▶ Play"}</button>
-            <button onClick={() => setSlide((slide + 1) % SLIDES.length)} className="bg-black/50 text-white text-[11px] px-2 py-[3px]">Next ▶</button>
+            <button onClick={() => setPlay(!play)} className="bg-black/50 text-white text-[11px] px-2 py-[3px] flex items-center gap-1">{play ? (<><Pause size={12} /> Pause</>) : (<><Play size={12} /> Play</>)}</button>
+            <button onClick={() => setSlide((slide + 1) % SLIDES.length)} className="bg-black/50 text-white text-[11px] px-2 py-[3px] flex items-center gap-1">Next <ChevronRight size={12} /></button>
           </div>
         </div>
         <div className="bg-[#fff6d9] border border-t-0 border-[#d9bd6a] text-[#5c4300] text-[12.5px] px-3 py-[6px] flex gap-2">
-          <b className="shrink-0">📢 {ml ? "പുതിയത്" : "What's New"}:</b>
+          <b className="shrink-0 flex items-center gap-1"><Megaphone size={14} /> {ml ? "പുതിയത്" : "What's New"}:</b>
           <marquee className="flex-1">Application for Principals in Government Law Colleges • State Level Coordination Committee for NEET (UG) 2026 Re-examination re-constituted • CM Nava Kerala Post Doctoral Fellowships • KIRF Rankings 2025</marquee>
         </div>
       </div>
@@ -141,7 +142,7 @@ export default function HigherEd({ lang, setLang, onBack }) {
       {/* Welcome + quote */}
       <div className="max-w-[1180px] mx-auto px-3 mt-4 grid md:grid-cols-3 gap-4">
         <div className="md:col-span-2 bg-white border border-[#c9b98a] border-t-[3px] border-t-[#5c1212] p-4 shadow-sm">
-          <h2 className="text-[17px] font-bold text-[#5c1212] border-b border-[#e5d6a8] pb-2">🏛️ {ml ? "ഉന്നത വിദ്യാഭ്യാസ വകുപ്പിലേക്ക് സ്വാഗതം" : "Welcome to Higher Education Department"}</h2>
+          <h2 className="text-[17px] font-bold text-[#5c1212] border-b border-[#e5d6a8] pb-2 flex items-center gap-1"><Landmark size={17} /> {ml ? "ഉന്നത വിദ്യാഭ്യാസ വകുപ്പിലേക്ക് സ്വാഗതം" : "Welcome to Higher Education Department"}</h2>
           <p className="text-[13px] italic text-[#5a4a1a] bg-[#fdf8ea] border-l-4 border-[#d4a017] px-3 py-2 mt-3">
             “Education should be imparted with a view to the type of society that we wish to build. We are working for a modern democracy built on the values of human dignity and equality.”
           </p>
@@ -162,18 +163,18 @@ export default function HigherEd({ lang, setLang, onBack }) {
         </div>
         <div className="space-y-4">
           <div className="bg-white border border-[#c9b98a] border-t-[3px] border-t-[#d4a017] shadow-sm">
-            <div className="bg-[#5c1212] text-white text-[13px] font-bold px-3 py-2">🔗 {ml ? "ക്വിക്ക് ലിങ്കുകൾ" : "Quick Links"}</div>
+            <div className="bg-[#5c1212] text-white text-[13px] font-bold px-3 py-2 flex items-center gap-1"><Link2 size={14} /> {ml ? "ക്വിക്ക് ലിങ്കുകൾ" : "Quick Links"}</div>
             <ul className="text-[12.5px] divide-y divide-[#eee3c2]">
               {["Know the Department", "Collegiate Education", "Technical Education", "IHRD", "LBS Centre", "KSHEC", "e-Grantz", "AUS / Admissions"].map((l) => (
-                <li key={l} className="px-3 py-[7px] hover:bg-[#fdf6dd] cursor-pointer text-[#5c1212]">▸ {l}</li>
+                <li key={l} className="px-3 py-[7px] hover:bg-[#fdf6dd] cursor-pointer flex items-center gap-1"><ChevronRight size={13} className="shrink-0" /> {l}</li>
               ))}
             </ul>
           </div>
           <div id="hedn-academic" className="bg-white border border-[#c9b98a] shadow-sm">
-            <div className="bg-[#5c1212] text-white text-[13px] font-bold px-3 py-2">🎓 {ml ? "അക്കാദമിക്" : "Academic"}</div>
+            <div className="bg-[#5c1212] text-white text-[13px] font-bold px-3 py-2 flex items-center gap-1"><GraduationCap size={14} /> {ml ? "അക്കാദമിക്" : "Academic"}</div>
             <ul className="text-[12.5px] divide-y divide-[#eee3c2]">
               {["Institutions – Government / Aided / Self-financing", "Regulations & Curriculum", "Academic Calendar", "University Acts & Statutes", "Lakshadweep Quota", "Admissions"].map((l) => (
-                <li key={l} className="px-3 py-[7px] hover:bg-[#fdf6dd] cursor-pointer">▸ {l}</li>
+                <li key={l} className="px-3 py-[7px] hover:bg-[#fdf6dd] cursor-pointer flex items-center gap-1"><ChevronRight size={13} className="shrink-0" /> {l}</li>
               ))}
             </ul>
           </div>
@@ -183,7 +184,7 @@ export default function HigherEd({ lang, setLang, onBack }) {
       {/* Leaders */}
       <div className="max-w-[1180px] mx-auto px-3 mt-4">
         <div className="bg-white border border-[#c9b98a] border-t-[3px] border-t-[#5c1212] p-4 shadow-sm">
-          <h2 className="text-[15px] font-bold text-[#5c1212]">👥 {ml ? "നേതൃത്വം" : "Leadership"}</h2>
+          <h2 className="text-[15px] font-bold text-[#5c1212] flex items-center gap-1"><Users size={15} /> {ml ? "നേതൃത്വം" : "Leadership"}</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
             {LEADERS.map((l) => (
               <div key={l.n} className="border border-[#c9b98a] bg-[#fffdf4] text-center p-3">
@@ -199,10 +200,10 @@ export default function HigherEd({ lang, setLang, onBack }) {
       {/* Universities strip */}
       <div id="hedn-universities" className="max-w-[1180px] mx-auto px-3 mt-4">
         <div className="bg-white border border-[#c9b98a] border-t-[3px] border-t-[#d4a017] p-4 shadow-sm">
-          <h2 className="text-[15px] font-bold text-[#5c1212]">🏫 {ml ? "സർവകലാശാലകളും സ്ഥാപനങ്ങളും" : "Universities & Institutions"}</h2>
+          <h2 className="text-[15px] font-bold text-[#5c1212] flex items-center gap-1"><School size={15} /> {ml ? "സർവകലാശാലകളും സ്ഥാപനങ്ങളും" : "Universities & Institutions"}</h2>
           <div className="flex flex-wrap gap-2 mt-3 text-[12px]">
             {["University of Kerala", "MG University", "Calicut University", "Kannur University", "CUSAT", "KTU (APJ Abdul Kalam)", "Sree Sankaracharya", "Thunchath Ezhuthachan Malayalam University", "NUALS", "KAU", "KUHS", "SSUS", "Central University of Kerala", "IIT Palakkad", "IISER TVM", "NIT Calicut"].map((u) => (
-              <span key={u} className="px-2 py-1 bg-[#f7efD6] border border-[#c9b98a] text-[#5c1212]">◈ {u}</span>
+              <span key={u} className="px-2 py-1 bg-[#f7efD6] border border-[#c9b98a] text-[#5c1212] flex items-center gap-1"><ChevronRight size={12} className="shrink-0" /> {u}</span>
             ))}
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3 text-center">
@@ -216,13 +217,13 @@ export default function HigherEd({ lang, setLang, onBack }) {
       {/* Scholarships */}
       <div id="hedn-scholarships" className="max-w-[1180px] mx-auto px-3 mt-4">
         <div className="bg-white border border-[#c9b98a] border-t-[3px] border-t-[#1f8a4c] p-4 shadow-sm">
-          <h2 className="text-[15px] font-bold text-[#5c1212]">💰 {ml ? "സ്കോളർഷിപ്പുകൾ" : "Scholarships"}</h2>
+          <h2 className="text-[15px] font-bold text-[#5c1212] flex items-center gap-1"><IndianRupee size={15} /> {ml ? "സ്കോളർഷിപ്പുകൾ" : "Scholarships"}</h2>
           <div className="grid md:grid-cols-4 gap-3 mt-3">
             {SCHOLARSHIPS.map((s2) => (
               <div key={s2.n} className="border border-[#9cc79c] bg-[#f4fbf4] p-3">
                 <div className="font-bold text-[13px] text-[#14661f]">{s2.n}</div>
                 <div className="text-[12px] mt-1 min-h-[54px]">{s2.d}</div>
-                <div className="text-[11px] font-bold text-[#0b3d91] break-all mt-1">🔗 {s2.l}</div>
+                <div className="text-[11px] font-bold text-[#0b3d91] break-all mt-1 flex items-center gap-1"><Link2 size={11} className="shrink-0" /> {s2.l}</div>
               </div>
             ))}
           </div>
@@ -233,8 +234,8 @@ export default function HigherEd({ lang, setLang, onBack }) {
       <div id="hedn-orders" className="max-w-[1180px] mx-auto px-3 mt-4">
         <div className="bg-white border border-[#c9b98a] border-t-[3px] border-t-[#5c1212] shadow-sm">
           <div className="px-4 py-2 flex items-center gap-2 border-b border-[#e5d6a8]">
-            <h2 className="text-[15px] font-bold text-[#5c1212]">📜 {ml ? "സർക്കാർ ഉത്തരവുകൾ" : "Government Orders"}</h2>
-            <span className="ml-auto text-[11.5px] text-[#6b5a2a] no-print">🔍 {gos.length} shown — type in header search to filter</span>
+            <h2 className="text-[15px] font-bold text-[#5c1212] flex items-center gap-1"><ScrollText size={15} /> {ml ? "സർക്കാർ ഉത്തരവുകൾ" : "Government Orders"}</h2>
+            <span className="ml-auto text-[11.5px] text-[#6b5a2a] no-print flex items-center gap-1"><Search size={12} /> {gos.length} shown — type in header search to filter</span>
           </div>
           <table className="w-full text-[12.5px]" style={{ borderCollapse: "collapse" }}>
             <thead><tr className="bg-[#f3e8c8] text-[#5c1212]"><th className="text-left p-2 w-[100px] border border-[#d9c98f]">Date</th><th className="text-left p-2 border border-[#d9c98f]">Subject</th><th className="text-left p-2 w-[230px] border border-[#d9c98f]">G.O. Number</th></tr></thead>

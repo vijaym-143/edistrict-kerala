@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { ArrowLeft, ArrowRight, Check, CircleCheck, CreditCard, Printer, ScrollText, TriangleAlert, X } from "lucide-react";
 import { STR } from "../lib/i18n";
 import { DISTRICTS, PURPOSES, DOCS, makeAckNo } from "../lib/data";
 import Certificate from "./Certificate";
@@ -59,7 +60,7 @@ export default function IncomeForm({ lang, go, setLastAck }) {
     return (
       <div className="max-w-[900px] mx-auto px-3 mt-4">
         <div className="gov-panel p-6 text-center">
-          <div className="text-[42px]">✅</div>
+          <div><CircleCheck size={42} className="mx-auto text-[#14661f]" /></div>
           <h2 className="text-[19px] font-bold text-[#14661f]">Application Submitted Successfully / അപേക്ഷ സമർപ്പിച്ചു</h2>
           <p className="text-[13px] text-[#4a5a7a] mt-1">SMS sent to +91 {f.mobile} (demo). Note your Acknowledgement Number.</p>
           <div className="inline-block mt-3 border-2 border-dashed border-[#0b3d91] bg-[#eef3ff] px-6 py-3">
@@ -76,13 +77,13 @@ export default function IncomeForm({ lang, go, setLastAck }) {
             </tbody>
           </table>
           <div className="flex gap-2 justify-center mt-4 no-print">
-            <button className="gov-btn" onClick={()=>window.print()}>🖨️ Print Receipt</button>
-            <button className="gov-btn gov-btn-green" onClick={()=>go("track")}>Track Status →</button>
+            <button className="gov-btn" onClick={()=>window.print()}><Printer size={14} className="inline" /> Print Receipt</button>
+            <button className="gov-btn gov-btn-green" onClick={()=>go("track")}>Track Status <ArrowRight size={13} className="inline" /></button>
             <button className="gov-btn gov-btn-grey" onClick={()=>go("home")}>Home</button>
           </div>
         </div>
         <div className="gov-panel mt-4 p-3">
-          <div className="font-bold text-[13px] text-[#0b3d91]">📜 Mock Certificate Preview — same header/footer as original (demo data)</div>
+          <div className="font-bold text-[13px] text-[#0b3d91] flex items-center gap-1"><ScrollText size={14} /> Mock Certificate Preview — same header/footer as original (demo data)</div>
           <Certificate rec={{...ack, certDate: new Date().toLocaleDateString("en-IN")}} lang={lang} />
         </div>
       </div>
@@ -103,7 +104,7 @@ export default function IncomeForm({ lang, go, setLastAck }) {
             const n=i+1; const cls = stage===n?"step-active":stage>n?"step-done":"";
             return (
               <div key={n} className={`flex items-center gap-2 ${cls} shrink-0`}>
-                <div className="step-dot">{stage>n?"✓":n}</div>
+                <div className="step-dot">{stage>n?<Check size={15} />:n}</div>
                 <div className="text-[12px] font-bold text-[#0b3d91]">{s}</div>
                 {n<3 && <div className="w-8 h-[2px] bg-[#9fb0cc] mx-1"/>}
               </div>
@@ -112,7 +113,7 @@ export default function IncomeForm({ lang, go, setLastAck }) {
           <div className="ml-auto text-[11.5px] text-[#4a5a7a]">Fields marked <span className="text-[#c00000] font-bold">*</span> mandatory</div>
         </div>
 
-        {err && <div className="m-3 bg-[#fdecec] border border-[#e8a0a0] text-[#8f1111] text-[12.5px] px-3 py-2 font-bold">⚠️ {err}</div>}
+        {err && <div className="m-3 bg-[#fdecec] border border-[#e8a0a0] text-[#8f1111] text-[12.5px] px-3 py-2 font-bold flex items-center gap-1"><TriangleAlert size={14} className="shrink-0" /> {err}</div>}
 
         {stage===1 && (
           <div className="p-3 md:p-4">
@@ -152,14 +153,14 @@ export default function IncomeForm({ lang, go, setLastAck }) {
                 <input className="gov-input" placeholder="Occupation" value={m.occ} onChange={e=>set("members", f.members.map((x,j)=> j===i?{...x,occ:e.target.value}:x))} />
                 <div className="flex gap-2">
                   <input className="gov-input" placeholder="Income Rs." value={m.income} onChange={e=>set("members", f.members.map((x,j)=> j===i?{...x,income:e.target.value.replace(/[^\d]/g,"")}:x))} />
-                  {f.members.length>1 && <button className="gov-btn-grey gov-btn !px-2" onClick={()=>set("members", f.members.filter((_,j)=>j!==i))}>✕</button>}
+                  {f.members.length>1 && <button className="gov-btn-grey gov-btn !px-2" onClick={()=>set("members", f.members.filter((_,j)=>j!==i))}><X size={14} /></button>}
                 </div>
               </div>
             ))}
             <button className="gov-btn gov-btn-grey !py-[5px] text-[12px]" onClick={()=>set("members",[...f.members,{name:"",rel:"",occ:"",income:""}])}>+ Add member</button>
 
             <div className="flex gap-2 mt-5 no-print">
-              <button className="gov-btn" onClick={next}>Save & Next: Upload Documents →</button>
+              <button className="gov-btn" onClick={next}>Save & Next: Upload Documents <ArrowRight size={13} className="inline" /></button>
               <button className="gov-btn gov-btn-grey" onClick={()=>{setF(blank);}}>Clear</button>
             </div>
           </div>
@@ -176,14 +177,14 @@ export default function IncomeForm({ lang, go, setLastAck }) {
                     <td>{i+1}</td>
                     <td><b>{lang==="ml"?d.ml:d.en}</b> {d.required?<span className="text-[#c00000]">*</span>:<span className="text-[11px] text-[#5a6b8f]">(optional)</span>}</td>
                     <td><input type="file" accept=".pdf,.jpg,.jpeg,.png" className="text-[12px]" onChange={e=>setFiles(s=>({...s,[d.key]:e.target.files[0]}))} /></td>
-                    <td>{files[d.key]?<span className="text-[#14661f] font-bold">✓ {files[d.key].name.slice(0,28)}</span>:<span className="text-[#8a94ad]">Pending</span>}</td>
+                    <td>{files[d.key]?<span className="text-[#14661f] font-bold flex items-center gap-1"><Check size={13} /> {files[d.key].name.slice(0,28)}</span>:<span className="text-[#8a94ad]">Pending</span>}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
             <div className="flex gap-2 mt-4 no-print">
-              <button className="gov-btn gov-btn-grey" onClick={()=>setStage(1)}>← Back</button>
-              <button className="gov-btn" onClick={next}>Save & Next: Payment →</button>
+              <button className="gov-btn gov-btn-grey" onClick={()=>setStage(1)}><ArrowLeft size={13} className="inline" /> Back</button>
+              <button className="gov-btn" onClick={next}>Save & Next: Payment <ArrowRight size={13} className="inline" /></button>
             </div>
           </div>
         )}
@@ -205,7 +206,7 @@ export default function IncomeForm({ lang, go, setLastAck }) {
                 </table>
               </div>
               <div className="gov-panel gov-panel-orange">
-                <div className="gov-subhead px-3 py-2 text-[12.5px]">💳 Fee Payment (Demo — no real gateway)</div>
+                <div className="gov-subhead px-3 py-2 text-[12.5px] flex items-center gap-1"><CreditCard size={14} /> Fee Payment (Demo — no real gateway)</div>
                 <div className="p-3 space-y-2 text-[13px]">
                   <div className="flex justify-between"><span>Govt + service fee</span><b>Rs. 15.00</b></div>
                   <div className="flex justify-between text-[#5a6b8f] text-[12px]"><span>Bank / gateway charges</span><span>Rs. 0.00 (demo)</span></div>
@@ -221,7 +222,7 @@ export default function IncomeForm({ lang, go, setLastAck }) {
               </div>
             </div>
             <div className="flex gap-2 mt-4 no-print">
-              <button type="button" className="gov-btn gov-btn-grey" onClick={()=>setStage(2)}>← Back</button>
+              <button type="button" className="gov-btn gov-btn-grey" onClick={()=>setStage(2)}><ArrowLeft size={13} className="inline" /> Back</button>
               <button type="submit" className="gov-btn gov-btn-green">Pay Rs.15 & Generate Acknowledgement</button>
             </div>
           </form>

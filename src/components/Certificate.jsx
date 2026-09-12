@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Download, Landmark, Loader2, Lock, Printer } from "lucide-react";
 import html2pdf from "html2pdf.js";
 
 function inWords(num) {
@@ -54,9 +55,9 @@ export default function Certificate({ rec, lang }) {
     <div className="mt-4">
       <div className="flex flex-wrap gap-2 no-print mb-2">
         <button onClick={downloadPDF} disabled={busy} className="gov-btn gov-btn-green">
-          {busy ? "⏳ Generating PDF…" : "⬇️ Download Certificate PDF (Mock)"}
+          {busy ? (<><Loader2 size={14} className="inline animate-spin" /> Generating PDF…</>) : (<><Download size={14} className="inline" /> Download Certificate PDF (Mock)</>)}
         </button>
-        <button onClick={() => window.print()} className="gov-btn gov-btn-grey">🖨️ Print</button>
+        <button onClick={() => window.print()} className="gov-btn gov-btn-grey"><Printer size={14} className="inline" /> Print</button>
         <span className="text-[11px] text-[#6b7690] self-center">PDF captures the exact header + footer below • Malayalam-safe (image render)</span>
       </div>
 
@@ -65,7 +66,7 @@ export default function Certificate({ rec, lang }) {
         {/* header */}
         <div style={{ textAlign: "center", borderBottom: "2px solid #0b3d91", paddingBottom: 10 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
-            <div style={{ width: 58, height: 58, borderRadius: 9999, border: "2px solid #0b3d91", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>🏛️</div>
+            <div style={{ width: 58, height: 58, borderRadius: 9999, border: "2px solid #0b3d91", display: "flex", alignItems: "center", justifyContent: "center" }}><Landmark size={26} color="#0b3d91" /></div>
             <div>
               <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1 }}>GOVERNMENT OF KERALA • കേരള സർക്കാർ</div>
               <div style={{ fontSize: 12, color: "#333" }}>Revenue Department • റവന്യൂ വകുപ്പ്</div>
@@ -149,7 +150,7 @@ export default function Certificate({ rec, lang }) {
         {/* footer */}
         <div style={{ marginTop: 16, borderTop: "2px solid #0b3d91", paddingTop: 8, fontSize: 10.5, color: "#333" }}>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
-            <span>🔒 This is a digitally signed certificate issued through eDistrict Kerala. No manual signature required as per IT Act 2000.</span>
+            <span><Lock size={11} style={{ display: "inline", verticalAlign: -1 }} /> This is a digitally signed certificate issued through eDistrict Kerala. No manual signature required as per IT Act 2000.</span>
             <span>Page 1 of 1</span>
           </div>
           <div style={{ marginTop: 4, background: "#f2f4f9", border: "1px solid #c5d1e8", padding: "4px 8px" }}>

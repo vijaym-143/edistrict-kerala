@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ArrowRight, GraduationCap } from "lucide-react";
 import Lenis from "lenis";
 import TopBar from "./components/TopBar";
 import Footer from "./components/Footer";
@@ -96,7 +97,7 @@ export default function App() {
         <div className="max-w-[1180px] mx-auto px-3 h-[28px] flex items-center gap-2">
           <span className="opacity-70">Portals:</span>
           <button className="px-2 font-bold bg-white text-[#061f4d]">eDistrict</button>
-          <button onClick={() => goPortal("highered")} className="px-2 underline opacity-90 hover:opacity-100">🎓 Higher Education Dept →</button>
+          <button onClick={() => goPortal("highered")} className="px-2 underline opacity-90 hover:opacity-100 flex items-center gap-1"><GraduationCap size={12} /> Higher Education Dept <ArrowRight size={12} /></button>
         </div>
       </div>
       <TopBar lang={lang} setLang={setLang} go={go} />

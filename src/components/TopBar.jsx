@@ -1,3 +1,4 @@
+import { Flag, Landmark } from "lucide-react";
 import { STR } from "../lib/i18n";
 
 export default function TopBar({ lang, setLang, go }) {
@@ -8,7 +9,7 @@ export default function TopBar({ lang, setLang, go }) {
       <div className="bg-[#082c6a] text-white text-[11.5px]">
         <div className="max-w-[1180px] mx-auto px-3 flex items-center justify-between h-[30px]">
           <div className="flex items-center gap-3 truncate">
-            <span className="font-bold">🇮🇳 {t.govtKerala} | {t.edistrict}</span>
+            <span className="font-bold flex items-center gap-1"><Flag size={12} /> {t.govtKerala} | {t.edistrict}</span>
           </div>
           <div className="flex items-center gap-2">
             <button onClick={() => setLang("en")} className={`px-2 py-[1px] border ${lang==="en"?"bg-white text-[#082c6a] font-bold":"border-white/50"}`}>English</button>
@@ -22,7 +23,7 @@ export default function TopBar({ lang, setLang, go }) {
         <div className="max-w-[1180px] mx-auto px-3 py-2 flex items-center gap-3">
           <div className="w-[52px] h-[52px] shrink-0 rounded-full bg-[#0b3d91] text-white flex flex-col items-center justify-center leading-none border-2 border-[#e8762b]">
             <span className="text-[9px] font-bold">GOK</span>
-            <span className="text-[16px]">🏛️</span>
+            <span className="flex justify-center"><Landmark size={18} /></span>
           </div>
           <div className="min-w-0">
             <div className="text-[19px] md:text-[24px] font-bold text-[#0b3d91] leading-tight truncate">
